@@ -61,6 +61,7 @@ public class Tile {
     }
     
     public boolean canAccess() {
+        if(this.creature != null) return false;
         return access;
     }
     

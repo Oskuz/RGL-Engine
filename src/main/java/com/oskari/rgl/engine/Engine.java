@@ -16,6 +16,8 @@ public class Engine {
         creatures = new ArrayList<>();
         maps = new HashMap<>();
         aiList = new HashMap<>();
+        
+        aiList.put("RandomAI", new RandomAI());
     }
     
     public static void update(){

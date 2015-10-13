@@ -39,7 +39,9 @@ public class Creature extends GameObject {
         }
     }
 
-    public void move(int x, int y){
+    public void move(int x, int y) throws EngineException{
+        if( x < 0 || x > Engine.maps.get(map).getSizeX() || y < 0 ||y > Engine.maps.get(map).getSizeY() ) throw new EngineException("move point is out from area");
+        
         if(Math.sqrt(Math.pow(this.x-x,2)+Math.pow(this.y-y,2)) <= 1 && Engine.maps.get(map).getTile(x, y).canAccess()){
             Engine.maps.get(map).getTile(this.x, this.y).eraseCreature();
             Engine.maps.get(map).getTile(x, y).setCreature(this);
@@ -51,6 +53,10 @@ public class Creature extends GameObject {
         
     }
 
+    public String getMap() {
+        return map;
+    }
+
     public int getY() {
         return y;
     }
@@ -60,6 +66,7 @@ public class Creature extends GameObject {
     }
     
     public void update() {
+        if(Ai == null) return;
         Ai.update(this);
     }
 
@@ -80,6 +87,7 @@ public class Creature extends GameObject {
        map = tokens.get(6);
        x = Integer.parseInt(tokens.get(8));
        y = Integer.parseInt(tokens.get(10));
+       if(Engine.aiList.get(tokens.get(12)) == null) throw new EngineException("Ai not found");
        Ai = Engine.aiList.get(tokens.get(12));
     }
 
@@ -87,5 +95,18 @@ public class Creature extends GameObject {
     public String toString() {
         return "CREATURE ["+name+","+lastName + "," + map + "," + x + "," + y + "," + Ai.name() + ']';
     }
+    
+    public String getFirstName() {
+        return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+    
+    public String getName(){
+        return name + " " + lastName;
+    }
+
     
 }
