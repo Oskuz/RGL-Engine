@@ -14,8 +14,15 @@ public interface ArtificialIntelligenceInterface {
     /**
      * called when is Creature's turn, takes params creture.
      * @param creature
+     * @return 
+     * @throws com.oskari.rgl.engine.EngineException
      */
-    public void update(Creature creature);
+    public int update(Creature creature) throws EngineException;
+
+    /**
+     *
+     * @return
+     */
     public String name();
     
 }

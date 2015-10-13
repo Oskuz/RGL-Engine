@@ -56,7 +56,7 @@ public class Map {
     }
     
     private void loadMap(ArrayList<String> tokens) throws EngineException {
-        System.out.println(tokens.toString());
+        System.out.println("loadMap"+tokens.toString());
        if(tokens.size()  < 1 ){
            throw new EngineException("too smal map");
        }
@@ -111,7 +111,7 @@ public class Map {
             
             Creature c = new Creature(tile);
             getTile(c.getX(), c.getY()).setCreature(c);
-            Engine.creatures.add(c);
+            Engine.register(c);
        }
     }
 

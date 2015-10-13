@@ -14,30 +14,31 @@ import java.util.Random;
 public class RandomAI implements ArtificialIntelligenceInterface {
 
     @Override
-    public void update(Creature creature) {
+    public int update(Creature creature) throws EngineException {
 
         try{
-            
-            if(Engine.maps.get(creature.getMap()).getTile(creature.getX()-1, creature.getY()-1).canAccess()){
-                creature.move(creature.getX()-1, creature.getY()-1);
-                return;
+            System.out.println("randomAI");
+            if(Engine.maps.get(creature.getMap()).getTile(creature.getX(), creature.getY()-1).canAccess()){
+                creature.move(creature.getX(), creature.getY()-1);
+                return 1;
             }
-            if(Engine.maps.get(creature.getMap()).getTile(creature.getX()-1, creature.getY()+1).canAccess()){
-                creature.move(creature.getX()-1, creature.getY()+1);
-                return;
+            if(Engine.maps.get(creature.getMap()).getTile(creature.getX(), creature.getY()+1).canAccess()){
+                creature.move(creature.getX(), creature.getY()+1);
+                return 1;
             }
-            if(Engine.maps.get(creature.getMap()).getTile(creature.getX()+1, creature.getY()-1).canAccess()){
-               creature.move(creature.getX()+1, creature.getY()-1);
-               return;
+            if(Engine.maps.get(creature.getMap()).getTile(creature.getX()+1, creature.getY()).canAccess()){
+               creature.move(creature.getX()+1, creature.getY());
+               return 1;
             } 
-             if(Engine.maps.get(creature.getMap()).getTile(creature.getX()+1, creature.getY()+1).canAccess()){
-                 creature.move(creature.getX()+1, creature.getY()+1);
-                 
+             if(Engine.maps.get(creature.getMap()).getTile(creature.getX()-1, creature.getY()).canAccess()){
+                 creature.move(creature.getX()-1, creature.getY());
+                 return 1;
              }
              
         } catch(Exception e){
-            e.printStackTrace();
+            
         }
+        throw new EngineException();
     }
 
     @Override

@@ -14,6 +14,25 @@ public class Creature extends GameObject {
     private String lastName;
     private int x, y;
     private ArtificialIntelligenceInterface Ai;
+    private int action_points;
+    private int speed;
+    public boolean turn = true; //help with player
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getAction_points() {
+        return action_points;
+    }
+
+    public void setAction_points(int action_points) {
+        this.action_points = action_points;
+    }
 
     public Creature(String name, String lastName, int x, int y, String map){
         this.x=x;
@@ -48,7 +67,7 @@ public class Creature extends GameObject {
             this.x = x; this.y=y;
         }
         else {
-            System.out.println("Kohtaan ei voi liikkua");
+            throw new EngineException("can't move: from"+this.x+", ("+this.y+")("+x+", "+ y +")");
         }
         
     }
@@ -66,8 +85,7 @@ public class Creature extends GameObject {
     }
     
     public void update() {
-        if(Ai == null) return;
-        Ai.update(this);
+
     }
 
     public void setAi(ArtificialIntelligenceInterface Ai) {
@@ -75,7 +93,7 @@ public class Creature extends GameObject {
     }
     
     private void parseCreature(ArrayList<String> tokens) throws EngineException{
-        System.out.println(tokens);
+        System.out.println("parseCreature" + tokens);
         if(tokens.size()  < 1 ){
            throw new EngineException("too smal map");
        }
@@ -89,6 +107,8 @@ public class Creature extends GameObject {
        y = Integer.parseInt(tokens.get(10));
        if(Engine.aiList.get(tokens.get(12)) == null) throw new EngineException("Ai not found");
        Ai = Engine.aiList.get(tokens.get(12));
+       speed = Integer.parseInt(tokens.get(14));
+       action_points = Integer.parseInt(tokens.get(16));
     }
 
     @Override
@@ -108,5 +128,9 @@ public class Creature extends GameObject {
         return name + " " + lastName;
     }
 
+    public int takeTurn() throws EngineException{
+        if(Ai == null) return 0;
+        return Ai.update(this);
+    }
     
 }
