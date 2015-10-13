@@ -16,5 +16,6 @@ public interface ArtificialIntelligenceInterface {
      * @param creature
      */
     public void update(Creature creature);
+    public String name();
     
 }

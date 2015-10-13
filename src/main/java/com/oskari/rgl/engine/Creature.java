@@ -1,5 +1,7 @@
 package com.oskari.rgl.engine;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -8,13 +10,33 @@ import java.util.logging.Logger;
 public class Creature extends GameObject {
 
     private String map;
+    private String name;
+    private String lastName;
     private int x, y;
     private ArtificialIntelligenceInterface Ai;
 
-    public Creature(int x, int y, String map){
+    public Creature(String name, String lastName, int x, int y, String map){
         this.x=x;
         this.y=y;
         this.map = map;
+        this.lastName = lastName;
+        this.name = name;
+    }
+    
+    public Creature(String file){
+        try {
+            this.parseCreature(File.Tokens(file));
+        } catch (EngineException ex) {
+            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Creature(ArrayList<String> tokens){
+        try {
+            parseCreature(tokens);
+        } catch (EngineException ex) {
+            Logger.getLogger(Creature.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void move(int x, int y){
@@ -44,4 +66,26 @@ public class Creature extends GameObject {
     public void setAi(ArtificialIntelligenceInterface Ai) {
         this.Ai = Ai;
     }
+    
+    private void parseCreature(ArrayList<String> tokens) throws EngineException{
+        System.out.println(tokens);
+        if(tokens.size()  < 1 ){
+           throw new EngineException("too smal map");
+       }
+       if(!"CREATURE".equals(tokens.get(0))){
+           throw new EngineException("Wrong type");
+       }
+       name = tokens.get(2);
+       lastName = tokens.get(4);
+       map = tokens.get(6);
+       x = Integer.parseInt(tokens.get(8));
+       y = Integer.parseInt(tokens.get(10));
+       Ai = Engine.aiList.get(tokens.get(12));
+    }
+
+    @Override
+    public String toString() {
+        return "CREATURE ["+name+","+lastName + "," + map + "," + x + "," + y + "," + Ai.name() + ']';
+    }
+    
 }

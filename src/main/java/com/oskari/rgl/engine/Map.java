@@ -6,7 +6,6 @@
 package com.oskari.rgl.engine;
 
 import java.util.ArrayList;
-import com.oskari.rgl.engine.EngineException;
 
 /**
  *
@@ -90,9 +89,29 @@ public class Map {
                 if("]".equals(tokens.get(i))) brackets--;
                 i++;
             }
-            i++; //,
+            if(tokens.get(i).equals(",")) i++;
             this.tiles.add(new Tile(tile));
            
+       }
+       while("CREATURE".equals(tokens.get(i))){
+           ArrayList<String> tile = new ArrayList<>();
+            tile.add(tokens.get(i));
+            i++;
+            tile.add(tokens.get(i));
+            i++;
+            brackets++;
+            
+            while(brackets > 1){
+                tile.add(tokens.get(i));
+                if("[".equals(tokens.get(i))) brackets++;
+                if("]".equals(tokens.get(i))) brackets--;
+                i++;
+            }
+            if(tokens.get(i).equals(",")) i++;
+            
+            Creature c = new Creature(tile);
+            getTile(c.getX(), c.getY()).setCreature(c);
+            Engine.creatures.add(c);
        }
     }
 
