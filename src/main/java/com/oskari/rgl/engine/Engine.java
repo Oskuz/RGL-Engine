@@ -36,6 +36,7 @@ public class Engine {
                try{
                 c.setAction_points(c.getAction_points() - c.takeTurn());
                }catch(Exception e){
+                  // e.printStackTrace();
                    break;
                }
             }

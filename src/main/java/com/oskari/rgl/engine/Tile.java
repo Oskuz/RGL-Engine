@@ -17,14 +17,20 @@ public class Tile {
     private boolean access;
     private boolean destroyable;
     private int destroy;
+    private int friction;
+
+    public int getFriction() {
+        return friction;
+    }
 
 
-    public Tile(int type, boolean access, boolean destroyable, int destroy) {
+    public Tile(int type, boolean access, boolean destroyable, int destroy, int friction) {
         this.creature = null;
         this.type = type;
         this.access = access;
         this.destroyable = destroyable;
         this.destroy = destroy;
+        this.friction = friction;
     }
 
     public boolean isAccess() {
@@ -95,7 +101,7 @@ public class Tile {
 
     @Override
     public String toString() {
-        return "TILE [ "+ type + "," + access + "," + destroyable +","+ destroy + ']';
+        return "TILE [ "+ type + "," + access + "," + destroyable +","+ destroy +","+friction+ ']';
     }
     
     private void loadTile(ArrayList<String> tokens) throws EngineException{
@@ -109,6 +115,7 @@ public class Tile {
         this.access = Boolean.parseBoolean(tokens.get(4));
         this.destroyable = Boolean.parseBoolean(tokens.get(6));
         this.destroy = Integer.parseInt(tokens.get(8));
+        this.friction = Integer.parseInt(tokens.get(10));
     }
     
 }

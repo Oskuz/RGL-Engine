@@ -62,6 +62,7 @@ public class Creature extends GameObject {
         if( x < 0 || x > Engine.maps.get(map).getSizeX() || y < 0 ||y > Engine.maps.get(map).getSizeY() ) throw new EngineException("move point is out from area");
         
         if(Math.sqrt(Math.pow(this.x-x,2)+Math.pow(this.y-y,2)) <= 1 && Engine.maps.get(map).getTile(x, y).canAccess()){
+            this.action_points -= Engine.maps.get(map).getTile(x, y).getFriction();
             Engine.maps.get(map).getTile(this.x, this.y).eraseCreature();
             Engine.maps.get(map).getTile(x, y).setCreature(this);
             this.x = x; this.y=y;

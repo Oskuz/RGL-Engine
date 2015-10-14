@@ -40,6 +40,7 @@ public class RandomAI implements ArtificialIntelligenceInterface {
         } catch(Exception e){
             
         }
+        last = -1;
         throw new EngineException();
     }
 
