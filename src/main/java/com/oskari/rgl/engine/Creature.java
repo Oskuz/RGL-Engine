@@ -93,7 +93,6 @@ public class Creature extends GameObject {
     }
     
     private void parseCreature(ArrayList<String> tokens) throws EngineException{
-        System.out.println("parseCreature" + tokens);
         if(tokens.size()  < 1 ){
            throw new EngineException("too smal map");
        }
